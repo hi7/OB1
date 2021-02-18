@@ -1,3 +1,6 @@
+#ifndef CONTROLS_H
+#define CONTROLS_H
+
 #include <algorithm>
 #include <Arduino_TFT.h>
 
@@ -20,3 +23,5 @@ class Button {
         void start(Arduino_TFT *gfx);
         void draw(Arduino_TFT *gfx);
 };
+
+#endif // CONTROLS_H

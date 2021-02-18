@@ -2,7 +2,7 @@
 #include <Arduino_TFT.h>
 
 
-class Bounce : public Action {
+class Grid : public Action {
     public:
         void start(Arduino_TFT *gfx) override;
 };

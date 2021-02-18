@@ -4,6 +4,9 @@
 #include <Arduino_GFX_Library.h>
 #include "OB1.h"
 #include "bounce.h"
+#include "squash.h"
+#include "jump.h"
+#include "grid.h"
 
 const uint8_t BTN = 5;
 std::vector<Button> actions;
@@ -52,11 +55,10 @@ void setup(void) {
     const int16_t min_width = 75;
     const uint8_t x = 8;
     uint8_t y = 25;
-    Bounce *a = new Bounce();
-    actions.push_back(Button(x, y, min_width, "bounce", a)); y += LINE_HEIGHT;
-    actions.push_back(Button(x, y, min_width, "squash", a)); y += LINE_HEIGHT;
-    actions.push_back(Button(x, y, min_width, "jump",   a)); y += LINE_HEIGHT;
-    actions.push_back(Button(x, y, min_width, "grid",   a)); y += LINE_HEIGHT;
+    actions.push_back(Button(x, y, min_width, "bounce", new Bounce())); y += LINE_HEIGHT;
+    actions.push_back(Button(x, y, min_width, "squash", new Squash())); y += LINE_HEIGHT;
+    actions.push_back(Button(x, y, min_width, "jump",   new Jump())); y += LINE_HEIGHT;
+    actions.push_back(Button(x, y, min_width, "grid",   new Grid())); y += LINE_HEIGHT;
     activeAction = &actions.at(0);
     activeAction->activate();
     drawControls();
