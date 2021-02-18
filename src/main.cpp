@@ -55,7 +55,7 @@ void setup(void) {
     const int16_t min_width = 75;
     const uint8_t x = 8;
     uint8_t y = 25;
-    actions.push_back(Button(x, y, min_width, "bounce", new Bounce())); y += LINE_HEIGHT;
+    actions.push_back(Button(x, y, min_width, "bounce", new Bounce(BTN))); y += LINE_HEIGHT;
     actions.push_back(Button(x, y, min_width, "squash", new Squash())); y += LINE_HEIGHT;
     actions.push_back(Button(x, y, min_width, "jump",   new Jump())); y += LINE_HEIGHT;
     actions.push_back(Button(x, y, min_width, "grid",   new Grid())); y += LINE_HEIGHT;
@@ -86,8 +86,12 @@ bool buttonPressed() {
     return result;
 }
 
+bool menu = true;
 void loop() {
-    if(buttonPressed()) {
+    if(menu && buttonPressed()) {
+        menu = false;
         activeAction->start(gfx);
+    } else {
+        activeAction->loop(gfx);
     }
 }

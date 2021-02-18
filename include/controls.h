@@ -8,6 +8,7 @@
 class Action  {
     public:
         virtual void start(Arduino_TFT *gfx);
+        virtual void loop(Arduino_TFT *gfx);
 };
 
 class Button {
@@ -21,6 +22,7 @@ class Button {
         void activate();
         void deactivate();
         void start(Arduino_TFT *gfx);
+        void loop(Arduino_TFT *gfx);
         void draw(Arduino_TFT *gfx);
 };
 

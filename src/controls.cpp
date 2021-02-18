@@ -17,6 +17,10 @@ void Button::start(Arduino_TFT *gfx) {
     action->start(gfx);
 }
 
+void Button::loop(Arduino_TFT *gfx) {
+    action->loop(gfx);
+}
+
 void Button::activate() {
     active = true;
 }
