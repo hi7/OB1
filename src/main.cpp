@@ -3,10 +3,11 @@
 #include <sstream>
 #include <Arduino_GFX_Library.h>
 #include "OB1.h"
-#include "controls.h"
+#include "bounce.h"
 
 const uint8_t BTN = 5;
 std::vector<Button> actions;
+Button *activeAction;
 
 // set unconnected pins to OUTPUT to save energy
 void saveEnergy() {
@@ -31,7 +32,6 @@ void drawControls() {
       actions.at(i).draw(gfx);
     }
 }
- 
 
 void setup(void) {
     saveEnergy();
@@ -52,17 +52,13 @@ void setup(void) {
     const int16_t min_width = 75;
     const uint8_t x = 8;
     uint8_t y = 25;
-    actions.push_back(Button(x,  y, min_width, "action I"));    y += LINE_HEIGHT;
-    actions.push_back(Button(x,  y, min_width, "action II"));   y += LINE_HEIGHT;
-    actions.push_back(Button(x,  y, min_width, "action III"));  y += LINE_HEIGHT;
-    actions.push_back(Button(x,  y, min_width, "action IV"));   y += LINE_HEIGHT;
-    actions.push_back(Button(x,  y, min_width, "action V"));    y += LINE_HEIGHT;
-    actions.push_back(Button(x,  y, min_width, "action VI"));   y += LINE_HEIGHT;
-    actions.push_back(Button(x,  y, min_width, "action VII"));  y += LINE_HEIGHT;
-    actions.push_back(Button(x,  y, min_width, "action VIII")); y += LINE_HEIGHT;
-    actions.push_back(Button(x,  y, min_width, "action IX"));   y += LINE_HEIGHT;
-    actions.push_back(Button(x,  y, min_width, "action X"));    y += LINE_HEIGHT;
-    actions.push_back(Button(x,  y, min_width, "action XI"));   y += LINE_HEIGHT;
+    Bounce *a = new Bounce();
+    actions.push_back(Button(x, y, min_width, "bounce", a)); y += LINE_HEIGHT;
+    actions.push_back(Button(x, y, min_width, "squash", a)); y += LINE_HEIGHT;
+    actions.push_back(Button(x, y, min_width, "jump",   a)); y += LINE_HEIGHT;
+    actions.push_back(Button(x, y, min_width, "grid",   a)); y += LINE_HEIGHT;
+    activeAction = &actions.at(0);
+    activeAction->activate();
     drawControls();
 }
 
@@ -90,6 +86,6 @@ bool buttonPressed() {
 
 void loop() {
     if(buttonPressed()) {
-        drawControls();
+        activeAction->start(gfx);
     }
 }
