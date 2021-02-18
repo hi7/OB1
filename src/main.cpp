@@ -9,8 +9,8 @@
 #include "grid.h"
 
 const uint8_t BTN = 5;
-std::vector<Button> actions;
-Button *activeAction;
+std::vector<Button> buttons;
+size_t activeButtonIndex = 0;
 
 // set unconnected pins to OUTPUT to save energy
 void saveEnergy() {
@@ -31,9 +31,34 @@ void saveEnergy() {
 }
 
 void drawControls() {
-    for(std::size_t i = 0; i < actions.size(); ++i) {
-      actions.at(i).draw(gfx);
+    for(std::size_t i = 0; i < buttons.size(); ++i) {
+      buttons.at(i).draw(gfx);
     }
+}
+
+Button* activeButton() {
+    return &buttons.at(activeButtonIndex);
+}
+
+void activateButton(size_t index) {
+    activeButtonIndex = index;
+    for(std::size_t i = 0; i < buttons.size(); ++i) {
+      buttons.at(i).deactivate();
+    }
+    activeButton()->activate();
+}
+
+void log(const char s[]) {
+    gfx->setCursor(10, 10);
+    gfx->setTextColor(BLUE);
+    gfx->println(s);
+}
+
+void log(size_t i) {
+    gfx->fillRect(90, 10, 40, 10, WHITE);
+    gfx->setCursor(90, 10);
+    gfx->setTextColor(BLACK);
+    gfx->println(i);
 }
 
 void setup(void) {
@@ -47,20 +72,16 @@ void setup(void) {
     pinMode(BTN, INPUT);
 #endif
 
-    gfx->setCursor(10, 10);
-    gfx->setTextColor(BLUE);
-    gfx->println("OB1 V0.0.1");
-
+    log("OB1 V0.0.1");
     const u_int8_t LINE_HEIGHT = 20;
     const int16_t min_width = 75;
     const uint8_t x = 8;
     uint8_t y = 25;
-    actions.push_back(Button(x, y, min_width, "bounce", new Bounce(BTN))); y += LINE_HEIGHT;
-    actions.push_back(Button(x, y, min_width, "squash", new Squash())); y += LINE_HEIGHT;
-    actions.push_back(Button(x, y, min_width, "jump",   new Jump())); y += LINE_HEIGHT;
-    actions.push_back(Button(x, y, min_width, "grid",   new Grid())); y += LINE_HEIGHT;
-    activeAction = &actions.at(0);
-    activeAction->activate();
+    buttons.push_back(Button(x, y, min_width, "bounce", new Bounce(BTN))); y += LINE_HEIGHT;
+    buttons.push_back(Button(x, y, min_width, "squash", new Squash())); y += LINE_HEIGHT;
+    buttons.push_back(Button(x, y, min_width, "jump",   new Jump())); y += LINE_HEIGHT;
+    buttons.push_back(Button(x, y, min_width, "grid",   new Grid())); y += LINE_HEIGHT;
+    activateButton(0);
     drawControls();
 }
 
@@ -86,12 +107,48 @@ bool buttonPressed() {
     return result;
 }
 
+bool pressed = false;
+unsigned long startTime = 0;
+unsigned long buttonReleased() {
+    uint8_t reading = digitalRead(BTN);
+    if(!pressed && (reading == HIGH)) {
+        pressed = true;
+        startTime = millis();
+    }
+    if(pressed && (reading == LOW)) {
+        pressed = false;
+        return millis() - startTime;
+    } 
+    
+    return 0;
+}
+
+const unsigned long LONG_PRESS = 500;
 bool menu = true;
 void loop() {
-    if(menu && buttonPressed()) {
-        menu = false;
-        activeAction->start(gfx);
+    if(menu) {
+        if(pressed) {
+            unsigned long duration = millis() - startTime;
+            if(duration > LONG_PRESS) {
+                if(activeButtonIndex < buttons.size() -1 ) {
+                    activeButtonIndex++;
+                } else {
+                    activeButtonIndex = 0;
+                }
+                activateButton(activeButtonIndex);
+                drawControls();
+                startTime = millis();
+            }
+        }
+
+        unsigned long duration = buttonReleased();
+        if(duration != 0) {
+            if(duration < LONG_PRESS) {
+                activeButton()->action()->start(gfx);
+                menu = false;
+            }
+        }
     } else {
-        activeAction->loop(gfx);
+        activeButton()->action()->loop(gfx);
     }
 }
