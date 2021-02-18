@@ -41,7 +41,7 @@
 
   <g id="LCD" transform="translate(160 34)">
     <rect x="0" y="0" width="120" height="70" fill="darkblue" />
-    <text x="232" y="97" font-size="9" text-anchor="middle" fill="white">2inch LCD Module</text>
+    <text x="74" y="37" font-size="9" text-anchor="middle" fill="white">2inch LCD Module</text>
     <circle cx="6" cy="6" r="3" fill="yellow" /><text x="22" y="9" font-size="9" text-anchor="middle" fill="white">VCC</text>
     <circle cx="6" cy="14" r="3" fill="yellow" /><text x="22" y="17" font-size="9" text-anchor="middle" fill="white">GRD</text>
     <circle cx="6" cy="22" r="3" fill="yellow" /><text x="20" y="25" font-size="9" text-anchor="middle" fill="white">DIN</text>
