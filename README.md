@@ -12,7 +12,7 @@ I connected a [Teensy 4.0](https://www.pjrc.com/store/teensy40.html) to a
 with the [Arduino_GFX](https://github.com/moononournation/Arduino_GFX) 
 library to drive the ST7789. As Button I use a [Mini Pushbutton Switch](https://www.sparkfun.com/products/97).
 
-Wiring
+## Wiring
 | LCD | Teensy |
 | --- | ------ |
 | VCC | 3V     |
@@ -23,3 +23,6 @@ Wiring
 | DC  | 8      |
 | RST | 7      |
 | BL  | 6      |
+
+![Alt Wiring](./circuit.svg)
+<img src="./circuit.svg">
