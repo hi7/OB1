@@ -25,4 +25,3 @@ library to drive the ST7789. As Button I use a [Mini Pushbutton Switch](https://
 | BL  | 6      |
 
 ![Alt Wiring](./circuit.svg)
-<img src="./circuit.svg">
