@@ -27,7 +27,8 @@ class Squash : public Action {
     Ball *ball;
     public:
         int8_t rounds;
-        Squash();
+        bool *exit;
+        Squash(bool *menu);
         void drawField(Arduino_TFT *gfx);
         void drawRounds(Arduino_TFT *gfx);
         void start(Arduino_TFT *gfx) override;

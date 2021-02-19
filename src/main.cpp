@@ -9,6 +9,8 @@
 #include "jump.h"
 #include "grid.h"
 
+bool menu = true;
+bool menuVislible = true;
 std::vector<Button> buttons;
 size_t activeButtonIndex = 0;
 
@@ -30,7 +32,9 @@ void saveEnergy() {
     pinMode(23, OUTPUT);
 }
 
-void drawControls() {
+void drawMenu() {
+    gfx->fillScreen(WHITE);
+    log("OB1 V0.0.1", gfx);
     for(std::size_t i = 0; i < buttons.size(); ++i) {
       buttons.at(i).draw(gfx);
     }
@@ -66,18 +70,17 @@ void setup(void) {
     pinMode(BTN, INPUT);
 #endif
 
-    log("OB1 V0.0.1", gfx);
     const u_int8_t LINE_HEIGHT = 20;
     const int16_t min_width = 75;
     const uint8_t x = 8;
     uint8_t y = 25;
-    buttons.push_back(Button(x, y, min_width, "squash", new Squash())); y += LINE_HEIGHT;
+    buttons.push_back(Button(x, y, min_width, "squash", new Squash(&menu))); y += LINE_HEIGHT;
     buttons.push_back(Button(x, y, min_width, "OB1",    new OB1(BTN))); y += LINE_HEIGHT;
     buttons.push_back(Button(x, y, min_width, "morse",  new Morse()));  y += LINE_HEIGHT;
     buttons.push_back(Button(x, y, min_width, "jump",   new Jump()));   y += LINE_HEIGHT;
     buttons.push_back(Button(x, y, min_width, "grid",   new Grid()));   y += LINE_HEIGHT;
     activateButton(0);
-    drawControls();
+    drawMenu();
 }
 
 int buttonState;
@@ -119,9 +122,12 @@ unsigned long buttonReleased() {
 }
 
 const unsigned long LONG_PRESS = 700;
-bool menu = true;
 void loop() {
     if(menu) {
+        if(!menuVislible) {
+            drawMenu();
+            menuVislible = true;
+        }
         if(pressed) {
             unsigned long duration = millis() - startTime;
             if(duration > LONG_PRESS) {
@@ -131,7 +137,7 @@ void loop() {
                     activeButtonIndex = 0;
                 }
                 activateButton(activeButtonIndex);
-                drawControls();
+                drawMenu();
                 startTime = millis();
             }
         }
@@ -141,6 +147,7 @@ void loop() {
             if(duration < LONG_PRESS) {
                 activeButton()->action()->start(gfx);
                 menu = false;
+                menuVislible = false;
             }
         }
     } else {

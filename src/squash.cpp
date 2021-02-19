@@ -60,7 +60,8 @@ void Player::draw(Arduino_TFT *gfx) {
     gfx->fillRect(310, y-size, 4, size>>2, BLACK);
 }
 
-Squash::Squash() {
+Squash::Squash(bool *menu) {
+    exit = menu;
     player = new Player(120);
     ball = new Ball(304, 130);
     rounds = 11;
@@ -81,7 +82,7 @@ void Squash::drawField(Arduino_TFT *gfx) {
 
 void Squash::start(Arduino_TFT *gfx) {
     gfx->fillScreen(WHITE);
-    log("Squash V0.0.1", gfx);
+    log("Squash V0.9", gfx);
     drawField(gfx);
     drawRounds(gfx);
     player->draw(gfx);
@@ -95,6 +96,9 @@ void Squash::loop(Arduino_TFT *gfx) {
     if(wait > 0) {
         if(wait < millis()) {
             wait = 0;
+            if(rounds == 0) {
+                *exit = true;
+            }
         }
     } else {
         uint16_t ballDuration = millis() - lastBallUpdate;
