@@ -110,7 +110,7 @@ void Squash::loop(Arduino_TFT *gfx) {
                 ball->dx = -1;
                 rounds--;
                 drawRounds(gfx);
-                wait = millis() + 500;
+                wait = millis() + 330;
             }
             ball->draw(gfx);
             lastBallUpdate = millis();

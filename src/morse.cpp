@@ -1,5 +1,9 @@
 #include "morse.h"
 
+Morse::Morse(bool *menu) {
+    exit = menu;
+}
+
 void Morse::start(Arduino_TFT *gfx) {
     gfx->fillScreen(WHITE);
     gfx->setCursor(10, 10);
@@ -8,5 +12,5 @@ void Morse::start(Arduino_TFT *gfx) {
 }
 
 void Morse::loop(Arduino_TFT *gfx) {
-    //gfx->fillScreen(WHITE);
+    if(buttonDown()) *exit = true;
 }
