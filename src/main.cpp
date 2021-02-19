@@ -34,7 +34,7 @@ void saveEnergy() {
 
 void drawMenu() {
     gfx->fillScreen(WHITE);
-    log("OB1 V0.0.1", gfx);
+    log("OB1 V0.1", gfx);
     for(std::size_t i = 0; i < buttons.size(); ++i) {
       buttons.at(i).draw(gfx);
     }
