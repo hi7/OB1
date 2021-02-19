@@ -71,9 +71,9 @@ void setup(void) {
     const int16_t min_width = 75;
     const uint8_t x = 8;
     uint8_t y = 25;
+    buttons.push_back(Button(x, y, min_width, "squash", new Squash())); y += LINE_HEIGHT;
     buttons.push_back(Button(x, y, min_width, "OB1",    new OB1(BTN))); y += LINE_HEIGHT;
     buttons.push_back(Button(x, y, min_width, "morse",  new Morse()));  y += LINE_HEIGHT;
-    buttons.push_back(Button(x, y, min_width, "squash", new Squash())); y += LINE_HEIGHT;
     buttons.push_back(Button(x, y, min_width, "jump",   new Jump()));   y += LINE_HEIGHT;
     buttons.push_back(Button(x, y, min_width, "grid",   new Grid()));   y += LINE_HEIGHT;
     activateButton(0);

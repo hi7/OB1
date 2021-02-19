@@ -35,7 +35,7 @@ OB1::OB1(uint8_t buttonPin)
 
 void OB1::start(Arduino_TFT *gfx) {
     gfx->fillScreen(WHITE);
-    log("OB1 V0.0.1", gfx);
+    log("OB1 V0.0.2", gfx);
 
     level->draw(gfx);
     draw(gfx);
