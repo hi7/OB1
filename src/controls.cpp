@@ -45,3 +45,19 @@ bool buttonDown() {
 bool buttonUp() {
     return digitalRead(BTN) == LOW;
 }
+
+void logAt(const char s[], uint16_t x, uint16_t y, Arduino_TFT *gfx) {
+    gfx->setCursor(x, y);
+    gfx->setTextColor(BLUE);
+    gfx->println(s);
+}
+void log(const char s[], Arduino_TFT *gfx) {
+    logAt(s, 10, 10, gfx);
+}
+
+void log(size_t i, Arduino_TFT *gfx) {
+    gfx->fillRect(90, 10, 40, 10, WHITE);
+    gfx->setCursor(90, 10);
+    gfx->setTextColor(BLACK);
+    gfx->println(i);
+}

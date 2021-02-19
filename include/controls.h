@@ -28,5 +28,8 @@ class Button {
 
 bool buttonDown();
 bool buttonUp();
+void logAt(const char s[], uint16_t x, uint16_t y, Arduino_TFT *gfx);
+void log(const char s[], Arduino_TFT *gfx);
+void log(size_t i, Arduino_TFT *gfx);
 
 #endif // CONTROLS_H

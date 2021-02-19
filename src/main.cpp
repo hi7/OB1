@@ -4,6 +4,7 @@
 #include <Arduino_GFX_Library.h>
 #include "OB1.h"
 #include "ob1.h"
+#include "morse.h"
 #include "squash.h"
 #include "jump.h"
 #include "grid.h"
@@ -47,19 +48,6 @@ void activateButton(size_t index) {
     activeButton()->activate();
 }
 
-void log(const char s[]) {
-    gfx->setCursor(10, 10);
-    gfx->setTextColor(BLUE);
-    gfx->println(s);
-}
-
-void log(size_t i) {
-    gfx->fillRect(90, 10, 40, 10, WHITE);
-    gfx->setCursor(90, 10);
-    gfx->setTextColor(BLACK);
-    gfx->println(i);
-}
-
 void tearingEffectLine(uint8_t on) {
     bus->beginWrite();
     bus->writeCommand(ST7789_TEON);
@@ -78,15 +66,16 @@ void setup(void) {
     pinMode(BTN, INPUT);
 #endif
 
-    log("OB1 V0.0.1");
+    log("OB1 V0.0.1", gfx);
     const u_int8_t LINE_HEIGHT = 20;
     const int16_t min_width = 75;
     const uint8_t x = 8;
     uint8_t y = 25;
-    buttons.push_back(Button(x, y, min_width, "OB1", new OB1(BTN))); y += LINE_HEIGHT;
+    buttons.push_back(Button(x, y, min_width, "OB1",    new OB1(BTN))); y += LINE_HEIGHT;
+    buttons.push_back(Button(x, y, min_width, "morse",  new Morse()));  y += LINE_HEIGHT;
     buttons.push_back(Button(x, y, min_width, "squash", new Squash())); y += LINE_HEIGHT;
-    buttons.push_back(Button(x, y, min_width, "jump",   new Jump())); y += LINE_HEIGHT;
-    buttons.push_back(Button(x, y, min_width, "grid",   new Grid())); y += LINE_HEIGHT;
+    buttons.push_back(Button(x, y, min_width, "jump",   new Jump()));   y += LINE_HEIGHT;
+    buttons.push_back(Button(x, y, min_width, "grid",   new Grid()));   y += LINE_HEIGHT;
     activateButton(0);
     drawControls();
 }
