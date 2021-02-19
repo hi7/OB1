@@ -3,12 +3,11 @@
 #include <sstream>
 #include <Arduino_GFX_Library.h>
 #include "OB1.h"
-#include "bounce.h"
+#include "ob1.h"
 #include "squash.h"
 #include "jump.h"
 #include "grid.h"
 
-const uint8_t BTN = 5;
 std::vector<Button> buttons;
 size_t activeButtonIndex = 0;
 
@@ -61,9 +60,16 @@ void log(size_t i) {
     gfx->println(i);
 }
 
+void tearingEffectLine(uint8_t on) {
+    bus->beginWrite();
+    bus->writeCommand(ST7789_TEON);
+    bus->write(on);
+    bus->endWrite();
+}
+
 void setup(void) {
     saveEnergy();
-    gfx->begin();
+    gfx->begin();    
     gfx->fillScreen(WHITE);
 
 #ifdef TFT_BL
@@ -77,7 +83,7 @@ void setup(void) {
     const int16_t min_width = 75;
     const uint8_t x = 8;
     uint8_t y = 25;
-    buttons.push_back(Button(x, y, min_width, "bounce", new Bounce(BTN))); y += LINE_HEIGHT;
+    buttons.push_back(Button(x, y, min_width, "OB1", new OB1(BTN))); y += LINE_HEIGHT;
     buttons.push_back(Button(x, y, min_width, "squash", new Squash())); y += LINE_HEIGHT;
     buttons.push_back(Button(x, y, min_width, "jump",   new Jump())); y += LINE_HEIGHT;
     buttons.push_back(Button(x, y, min_width, "grid",   new Grid())); y += LINE_HEIGHT;

@@ -1,11 +1,14 @@
 #include "controls.h"
 #include <Arduino_TFT.h>
 
-
-class Bounce : public Action {
+class OB1 : public Action {
     uint8_t button;
+    uint16_t x, y;
+    uint16_t reciprocalSpeed;
+    unsigned long lastUpdate;
     public:
-        Bounce(uint8_t buttonPin);
+        OB1(uint8_t buttonPin);
         void start(Arduino_TFT *gfx) override;
         void loop(Arduino_TFT *gfx) override;
+        void draw(Arduino_TFT *gfx);
 };

@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <Arduino_TFT.h>
 
+const uint8_t BTN = 5;
 
 class Action  {
     public:
@@ -24,5 +25,8 @@ class Button {
         void deactivate();
         void draw(Arduino_TFT *gfx);
 };
+
+bool buttonDown();
+bool buttonUp();
 
 #endif // CONTROLS_H

@@ -37,3 +37,11 @@ void Button::draw(Arduino_TFT *gfx) {
     gfx->setTextColor(BLACK);
     gfx->println(label);
 }
+
+bool buttonDown() {
+    return digitalRead(BTN) == HIGH;
+}
+
+bool buttonUp() {
+    return digitalRead(BTN) == LOW;
+}

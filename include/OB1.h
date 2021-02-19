@@ -1,3 +1,7 @@
+#define ST7789_VSCRDEF 0x33
+#define ST7789_TEOFF 0x34
+#define ST7789_TEON 0x35
+
 /* first check if selected specific hardware */
 // #define ESP32_LCDKIT_SPI
 // #define TTGO_T_DISPLAY
