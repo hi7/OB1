@@ -33,7 +33,10 @@ void saveEnergy() {
 }
 
 void drawMenu() {
-    gfx->fillScreen(WHITE);
+    if(!menuVislible) {
+        gfx->fillScreen(WHITE);
+        menuVislible = true;
+    }
     log("OB1 V0.1", gfx);
     for(std::size_t i = 0; i < buttons.size(); ++i) {
       buttons.at(i).draw(gfx);
@@ -126,7 +129,6 @@ void loop() {
     if(menu) {
         if(!menuVislible) {
             drawMenu();
-            menuVislible = true;
         }
         if(pressed) {
             unsigned long duration = millis() - startTime;
