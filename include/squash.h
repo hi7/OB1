@@ -9,8 +9,18 @@ class Ball {
         void draw(Arduino_TFT *gfx);
 };
 
-class Squash : public Action {
+class Player {
     uint16_t y;
+    uint8_t size;
+    public:
+        Player(uint16_t posy);
+        void up(Arduino_TFT *gfx);
+        void down(Arduino_TFT *gfx);
+        void draw(Arduino_TFT *gfx);
+};
+
+class Squash : public Action {
+    Player *player;
     Ball *ball;
     public:
         Squash();

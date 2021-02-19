@@ -118,7 +118,7 @@ unsigned long buttonReleased() {
     return 0;
 }
 
-const unsigned long LONG_PRESS = 500;
+const unsigned long LONG_PRESS = 700;
 bool menu = true;
 void loop() {
     if(menu) {
