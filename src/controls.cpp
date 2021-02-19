@@ -55,9 +55,15 @@ void log(const char s[], Arduino_TFT *gfx) {
     logAt(s, 10, 10, gfx);
 }
 
-void log(size_t i, Arduino_TFT *gfx) {
-    gfx->fillRect(90, 10, 40, 10, WHITE);
-    gfx->setCursor(90, 10);
+void log(size_t n, Arduino_TFT *gfx) {
+    gfx->fillRect(110, 10, 40, 10, WHITE);
+    gfx->setCursor(110, 10);
     gfx->setTextColor(BLACK);
-    gfx->println(i);
+    gfx->println(n);
+}
+void log(int8_t n, Arduino_TFT *gfx) {
+    gfx->fillRect(110, 10, 40, 10, WHITE);
+    gfx->setCursor(110, 10);
+    gfx->setTextColor(BLACK);
+    gfx->println(n);
 }
