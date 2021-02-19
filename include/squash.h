@@ -2,9 +2,9 @@
 #include <Arduino_TFT.h>
 
 class Ball {
-    uint16_t x, y;
-    int dx, dy;
     public:
+        uint16_t x, y;
+        int dx, dy;
         uint16_t reciprocalSpeed;
         Ball(uint16_t posx, uint16_t posy);
         bool update(uint16_t playerY, uint16_t playerSize);

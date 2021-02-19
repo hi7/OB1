@@ -10,17 +10,16 @@ Ball::Ball(uint16_t posx, uint16_t posy) {
 bool Ball::update(uint16_t playerY, uint16_t playerSize) {
     x += dx;
     y += dy;
-    if(x < 18 || (x > 303 && y > playerY - playerSize && y < playerY + playerSize)) {
+    if(x > 303) {
+        if(y > playerY - playerSize && y < playerY + playerSize) {
+            dx = -dx;
+        } else return true;
+    }
+    if(x < 18) {
         dx = -dx;
     }
     if(y > 214 || y < 33) {
         dy = -dy;
-    }
-    if(x > 325) {
-        x = 304;
-        y = playerY;
-        dx = -1;
-        return true; // ball is out
     }
     return false; // ball is in game
 }
@@ -101,10 +100,13 @@ void Squash::loop(Arduino_TFT *gfx) {
         uint16_t ballDuration = millis() - lastBallUpdate;
         if(ballDuration > ball->reciprocalSpeed) {
             bool out = ball->update(player->y, player->size);
-            if(out) {
+            if(out && (ball->x > 325)) {
+                ball->x = 304;
+                ball->y = player->y;
+                ball->dx = -1;
                 rounds--;
                 drawRounds(gfx);
-                wait = millis() + 1000;
+                wait = millis() + 500;
             }
             ball->draw(gfx);
             lastBallUpdate = millis();
