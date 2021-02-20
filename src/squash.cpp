@@ -55,14 +55,14 @@ void Player::up(Arduino_TFT *gfx) {
         y--;
         draw(gfx);
         gfx->fillRect(310, y-size, 4, 4, BLACK);
-        gfx->fillRect(310, y+size, 4, 4, WHITE);
+        gfx->fillRect(310, y+size, 4, size>>2, WHITE);
     }
 }
 void Player::down(Arduino_TFT *gfx) {
     if(y < 204) {
         y++;
         gfx->fillRect(310, y-size-4, 4, 4, WHITE);
-        gfx->fillRect(310, y+size-4, 4, 4, BLACK);
+        gfx->fillRect(310, y+size-4, 4, size>>2, BLACK);
     }
 }
 
@@ -85,9 +85,9 @@ void Squash::drawRounds(Arduino_TFT *gfx) {
 }
 
 void Squash::drawField(Arduino_TFT *gfx) {
-    gfx->fillRect(10,  25, 300, 2, RED);
-    gfx->fillRect(10,  25, 2, 195, RED);
-    gfx->fillRect(10,  220, 300, 2, RED);
+    gfx->fillRect(9, 24, 300, 3, RED);
+    gfx->fillRect(9,  25, 3, 195, RED);
+    gfx->fillRect(9, 220, 300, 3, RED);
 }
 
 void Squash::start(Arduino_TFT *gfx) {
