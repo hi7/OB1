@@ -28,7 +28,15 @@ class Button {
 
 bool buttonDown();
 bool buttonUp();
-void logAt(const char s[], uint16_t x, uint16_t y, Arduino_TFT *gfx);
+bool isPressed();
+unsigned long getStartTime();
+void setStartTime(unsigned long time);
+unsigned long buttonReleased();
+void logAt(size_t i, uint16_t x, uint16_t y, Arduino_TFT *gfx, bool clear);
+void logAt(const char c, uint16_t x, uint16_t y, Arduino_TFT *gfx, bool clear);
+void logAt(char s[], uint16_t x, uint16_t y, Arduino_TFT *gfx, bool clear);
+void logAt(const char s[], uint16_t x, uint16_t y, Arduino_TFT *gfx, bool clear);
+void log(char s[], Arduino_TFT *gfx);
 void log(const char s[], Arduino_TFT *gfx);
 void log(size_t n, Arduino_TFT *gfx);
 void log(int8_t n, Arduino_TFT *gfx);

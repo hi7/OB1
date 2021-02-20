@@ -108,30 +108,14 @@ bool buttonPressed() {
     return result;
 }
 
-bool pressed = false;
-unsigned long startTime = 0;
-unsigned long buttonReleased() {
-    uint8_t reading = digitalRead(BTN);
-    if(!pressed && (reading == HIGH)) {
-        pressed = true;
-        startTime = millis();
-    }
-    if(pressed && (reading == LOW)) {
-        pressed = false;
-        return millis() - startTime;
-    } 
-    
-    return 0;
-}
-
-const unsigned long LONG_PRESS = 700;
+const unsigned long LONG_PRESS = 900;
 void loop() {
     if(menu) {
         if(!menuVislible) {
             drawMenu();
         }
-        if(pressed) {
-            unsigned long duration = millis() - startTime;
+        if(isPressed()) {
+            unsigned long duration = millis() - getStartTime();
             if(duration > LONG_PRESS) {
                 if(activeButtonIndex < buttons.size() -1 ) {
                     activeButtonIndex++;
@@ -140,7 +124,7 @@ void loop() {
                 }
                 activateButton(activeButtonIndex);
                 drawMenu();
-                startTime = millis();
+                setStartTime(millis());
             }
         }
 

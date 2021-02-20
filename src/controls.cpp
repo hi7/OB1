@@ -46,13 +46,61 @@ bool buttonUp() {
     return digitalRead(BTN) == LOW;
 }
 
-void logAt(const char s[], uint16_t x, uint16_t y, Arduino_TFT *gfx) {
+bool pressed = false;
+bool isPressed() {
+    return pressed;
+}
+
+unsigned long startTime = 0;
+unsigned long getStartTime() {
+    return startTime;
+}
+void setStartTime(unsigned long time) {
+    startTime = time;
+}
+unsigned long buttonReleased() {
+    uint8_t reading = digitalRead(BTN);
+    if(!pressed && (reading == HIGH)) {
+        pressed = true;
+        startTime = millis();
+    }
+    if(pressed && (reading == LOW)) {
+        pressed = false;
+        return millis() - startTime;
+    } 
+    
+    return 0;
+}
+
+void logAt(char c, uint16_t x, uint16_t y, Arduino_TFT *gfx, bool clear) {
+    if(clear) gfx->fillRect(x, y, 40, 10, WHITE);
+    gfx->setCursor(x, y);
+    gfx->setTextColor(BLUE);
+    gfx->println(c);
+}
+void logAt(char s[], uint16_t x, uint16_t y, Arduino_TFT *gfx, bool clear) {
+    if(clear) gfx->fillRect(x, y, 40, 10, WHITE);
     gfx->setCursor(x, y);
     gfx->setTextColor(BLUE);
     gfx->println(s);
 }
+void logAt(const char s[], uint16_t x, uint16_t y, Arduino_TFT *gfx, bool clear) {
+    if(clear) gfx->fillRect(x, y, 40, 10, WHITE);
+    gfx->setCursor(x, y);
+    gfx->setTextColor(BLUE);
+    gfx->println(s);
+}
+void logAt(size_t i, uint16_t x, uint16_t y, Arduino_TFT *gfx, bool clear) {
+    if(clear) gfx->fillRect(x, y, 40, 10, WHITE);
+    gfx->setCursor(x, y);
+    gfx->setTextColor(BLUE);
+    gfx->println(i);
+}
+void log(char s[], Arduino_TFT *gfx) {
+    logAt(s, 10, 10, gfx, true);
+}
 void log(const char s[], Arduino_TFT *gfx) {
-    logAt(s, 10, 10, gfx);
+    logAt(s, 10, 10, gfx, true);
 }
 
 void log(size_t n, Arduino_TFT *gfx) {
