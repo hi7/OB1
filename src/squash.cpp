@@ -5,14 +5,18 @@ Ball::Ball(uint16_t posx, uint16_t posy) {
     y = posy;
     dx = -1;
     dy = 1;
+    r = 3;
+    d = 6;
     reciprocalSpeed = 5;
 }
 bool Ball::update(uint16_t playerY, uint16_t playerSize) {
     x += dx;
     y += dy;
-    if(x > 303) {
-        if(y > playerY - playerSize && y < playerY + playerSize) {
+    if(x > 305) {
+        if(y >= playerY - playerSize - d && y <= playerY + playerSize + d) {
             dx = -dx;
+            if(y > playerY) dy = 1;
+            if(y < playerY) dy = -1;
         } else return true;
     }
     if(x < 18) {
@@ -32,7 +36,12 @@ void Ball::draw(Arduino_TFT *gfx) {
     gfx->fillRect(x-5, y-5, 10, 2, WHITE);
     gfx->fillRect(x-5, y+3, 10, 2, WHITE);
     gfx->fillRect(x-5, y-5, 2, 10, WHITE);
-    gfx->fillRect(x+3, y-5, 2, 10, WHITE);
+    if(x < 305) {
+        gfx->fillRect(x+3, y-5, 2, 10, WHITE);
+    }
+}
+void Ball::clear(Arduino_TFT *gfx) {
+    gfx->fillRect(x-4, y-4, 8, 8, WHITE);
 }
 
 Player::Player(uint16_t posy) {
@@ -44,8 +53,9 @@ Player::Player(uint16_t posy) {
 void Player::up(Arduino_TFT *gfx) {
     if(y > 42) {
         y--;
+        draw(gfx);
         gfx->fillRect(310, y-size, 4, 4, BLACK);
-        gfx->fillRect(310, y+size+4, 4, 4, WHITE);
+        gfx->fillRect(310, y+size, 4, 4, WHITE);
     }
 }
 void Player::down(Arduino_TFT *gfx) {
@@ -81,7 +91,7 @@ void Squash::drawField(Arduino_TFT *gfx) {
 }
 
 void Squash::start(Arduino_TFT *gfx) {
-    header("Squash V0.9", gfx);
+    header("Squash V0.9.1", gfx);
     drawField(gfx);
     drawRounds(gfx);
     player->draw(gfx);
@@ -95,6 +105,12 @@ void Squash::loop(Arduino_TFT *gfx) {
     if(wait > 0) {
         if(wait < millis()) {
             wait = 0;
+            ball->clear(gfx);
+            ball->x = 304;
+            ball->y = player->y;
+            ball->dx = -1;
+            rounds--;
+            drawRounds(gfx);
             if(rounds == 0) {
                 *exit = true;
             }
@@ -103,12 +119,7 @@ void Squash::loop(Arduino_TFT *gfx) {
         uint16_t ballDuration = millis() - lastBallUpdate;
         if(ballDuration > ball->reciprocalSpeed) {
             bool out = ball->update(player->y, player->size);
-            if(out && (ball->x > 325)) {
-                ball->x = 304;
-                ball->y = player->y;
-                ball->dx = -1;
-                rounds--;
-                drawRounds(gfx);
+            if(out) {
                 wait = millis() + 330;
             }
             ball->draw(gfx);
