@@ -8,8 +8,11 @@ class Morse : public Action {
     public:
         std::vector<bool> code;
         std::string text;
+        uint16_t offset;
         Morse(bool *menu);
         char decode();
+        void drawSignal(bool longImpule, uint16_t x, uint16_t y, Arduino_TFT *gfx);
+        void chart(Arduino_TFT *gfx);
         void start(Arduino_TFT *gfx) override;
         void loop(Arduino_TFT *gfx) override;
 };

@@ -78,47 +78,42 @@ unsigned long buttonReleased() {
     
     return 0;
 }
-
-void logAt(char c, uint16_t x, uint16_t y, Arduino_TFT *gfx, bool clear) {
+void initLog(uint16_t x, uint16_t y, Arduino_TFT *gfx, bool clear) {
     if(clear) gfx->fillRect(x, y, 40, 10, WHITE);
     gfx->setCursor(x, y);
     gfx->setTextColor(BLUE);
-    gfx->println(c);
 }
-void logAt(char s[], uint16_t x, uint16_t y, Arduino_TFT *gfx, bool clear) {
-    if(clear) gfx->fillRect(x, y, 40, 10, WHITE);
-    gfx->setCursor(x, y);
-    gfx->setTextColor(BLUE);
-    gfx->println(s);
-}
-void logAt(const char s[], uint16_t x, uint16_t y, Arduino_TFT *gfx, bool clear) {
-    if(clear) gfx->fillRect(x, y, 40, 10, WHITE);
-    gfx->setCursor(x, y);
-    gfx->setTextColor(BLUE);
-    gfx->println(s);
-}
-void logAt(size_t i, uint16_t x, uint16_t y, Arduino_TFT *gfx, bool clear) {
-    if(clear) gfx->fillRect(x, y, 40, 10, WHITE);
-    gfx->setCursor(x, y);
-    gfx->setTextColor(BLUE);
+void logAt(uint32_t i, uint16_t x, uint16_t y, Arduino_TFT *gfx, bool clear) {
+    initLog(x, y, gfx, clear);
     gfx->println(i);
 }
-void log(char s[], Arduino_TFT *gfx) {
-    logAt(s, 10, 10, gfx, true);
+void logAt(size_t i, uint16_t x, uint16_t y, Arduino_TFT *gfx, bool clear) {
+    initLog(x, y, gfx, clear);
+    gfx->println(i);
+}
+void logAt(const char c, uint16_t x, uint16_t y, Arduino_TFT *gfx, bool clear) {
+    initLog(x, y, gfx, clear);
+    gfx->println(c);
+}
+void logAt(const char s[], uint16_t x, uint16_t y, Arduino_TFT *gfx, bool clear) {
+    initLog(x, y, gfx, clear);
+    gfx->println(s);
+}
+void logAt(char s[], uint16_t x, uint16_t y, Arduino_TFT *gfx, bool clear) {
+    initLog(x, y, gfx, clear);
+    gfx->println(s);
 }
 void log(const char s[], Arduino_TFT *gfx) {
     logAt(s, 10, 10, gfx, true);
 }
-
+void log(char s[], Arduino_TFT *gfx) {
+    logAt(s, 10, 10, gfx, true);
+}
 void log(size_t n, Arduino_TFT *gfx) {
-    gfx->fillRect(110, 10, 40, 10, WHITE);
-    gfx->setCursor(110, 10);
-    gfx->setTextColor(BLACK);
+    initLog(110, 10, gfx, true);
     gfx->println(n);
 }
 void log(int8_t n, Arduino_TFT *gfx) {
-    gfx->fillRect(110, 10, 40, 10, WHITE);
-    gfx->setCursor(110, 10);
-    gfx->setTextColor(BLACK);
+    initLog(110, 10, gfx, true);
     gfx->println(n);
 }

@@ -4,10 +4,23 @@ Morse::Morse(bool *menu) {
     exit = menu;
     code.reserve(5);
     text = "";
+    offset = 0;
 }
 
 void Morse::start(Arduino_TFT *gfx) {
     header("Morse V0.1", gfx);
+}
+
+void Morse::drawSignal(bool longImpulse, uint16_t x, uint16_t y, Arduino_TFT *gfx) {
+    if(longImpulse) {
+        gfx->fillRect(x, y, 25, 12, BLACK);
+    } else {
+        gfx->fillCircle(x+6, y+6, 6, BLACK);
+    }
+}
+
+void Morse::chart(Arduino_TFT *gfx) {
+
 }
 
 char Morse::decode() {
@@ -52,21 +65,34 @@ char Morse::decode() {
 }
 
 const uint16_t LONG = 200;
-//const uint16_t BREAK = 500;
+const uint16_t BREAK = 700;
+const uint16_t NEW_WORD = 1400;
+uint32_t lastSignal = 0xffffffff;
 void Morse::loop(Arduino_TFT *gfx) {
-    unsigned long duration = buttonReleased();
-    if(duration > 0) {
-        bool longImpulse = duration > LONG;
-        logAt(longImpulse ? "long" : "short", 100, 10, gfx, true);
-        code.push_back(longImpulse);
-        logAt(code.size(), 140, 10, gfx, true);
+    if(code.size() > 0 && millis() > (lastSignal + BREAK)) {
         char c = decode();
         if(c != -1) {
-            logAt(c, 160, 10, gfx, true);
             text += c;
-            code.clear();
-            logAt(text.c_str(), 190, 10, gfx, true);
+            logAt(text.c_str(), 10, 42, gfx, true);
+            gfx->fillRect(100, 10, 140, 10, WHITE);
+            gfx->fillRect(10, 25, 150, 13, WHITE); // clear dots & strokes
         }
+        code.clear();
+        offset = 0;
+    }
+    unsigned long duration = buttonReleased();
+    if(duration > 0) {
+        if(text.size() < 0 && millis() > lastSignal + NEW_WORD) {
+            text += ' ';
+        }
+
+        bool longImpulse = duration > LONG;
+        drawSignal(longImpulse, 10 + offset, 25, gfx);
+        offset += longImpulse ? 28 : 15;
+
+        logAt(longImpulse ? "long" : "short", 100, 10, gfx, true);
+        code.push_back(longImpulse);
+        lastSignal = millis();
     }
     // *exit = true;
 }

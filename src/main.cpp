@@ -77,11 +77,11 @@ void setup(void) {
     const int16_t min_width = 75;
     const uint8_t x = 8;
     uint8_t y = 25;
-    buttons.push_back(Button(x, y, min_width, "squash", new Squash(&menu))); y += LINE_HEIGHT;
-    buttons.push_back(Button(x, y, min_width, "morse",  new Morse(&menu)));  y += LINE_HEIGHT;
+    buttons.push_back(Button(x, y, min_width, "Squash", new Squash(&menu))); y += LINE_HEIGHT;
+    buttons.push_back(Button(x, y, min_width, "Morse",  new Morse(&menu)));  y += LINE_HEIGHT;
     buttons.push_back(Button(x, y, min_width, "OB1",    new OB1(BTN)));      y += LINE_HEIGHT;
-    buttons.push_back(Button(x, y, min_width, "spear",   new Spear()));       y += LINE_HEIGHT;
-    buttons.push_back(Button(x, y, min_width, "mahjong",   new Mahjong()));     y += LINE_HEIGHT;
+    buttons.push_back(Button(x, y, min_width, "Spear",   new Spear()));       y += LINE_HEIGHT;
+    buttons.push_back(Button(x, y, min_width, "Mahjong",   new Mahjong()));     y += LINE_HEIGHT;
     activateButton(0);
     drawMenu();
 }
