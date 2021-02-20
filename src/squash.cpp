@@ -91,7 +91,7 @@ void Squash::drawField(Arduino_TFT *gfx) {
 }
 
 void Squash::start(Arduino_TFT *gfx) {
-    header("Squash V1", gfx);
+    header("Squash V1.0", gfx);
     drawField(gfx);
     drawRounds(gfx);
     player->draw(gfx);

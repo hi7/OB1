@@ -12,7 +12,8 @@ class Morse : public Action {
         Morse(bool *menu);
         char decode();
         void drawSignal(bool longImpule, uint16_t x, uint16_t y, Arduino_TFT *gfx);
-        void chart(Arduino_TFT *gfx);
+        void drawCode(const char c, std::vector<bool> code, uint16_t x, uint16_t y, Arduino_TFT *gfx);
+        void drawChart(Arduino_TFT *gfx);
         void start(Arduino_TFT *gfx) override;
         void loop(Arduino_TFT *gfx) override;
 };
