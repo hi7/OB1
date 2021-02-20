@@ -8,6 +8,7 @@ const uint8_t BTN = 5;
 
 class Action  {
     public:
+        void header(const char* name, Arduino_TFT *gfx);
         virtual void start(Arduino_TFT *gfx);
         virtual void loop(Arduino_TFT *gfx);
 };

@@ -1,5 +1,12 @@
 #include "controls.h"
 
+void Action::header(const char* name, Arduino_TFT *gfx) {
+    gfx->fillScreen(WHITE);
+    gfx->setCursor(10, 10);
+    gfx->setTextColor(BLUE);
+    gfx->println(name);
+}
+
 Button::Button(uint16_t posx, uint16_t posy, uint16_t minimal_width, const char* text, Action *action) {
     x = posx;
     y = posy;

@@ -7,10 +7,7 @@ Morse::Morse(bool *menu) {
 }
 
 void Morse::start(Arduino_TFT *gfx) {
-    gfx->fillScreen(WHITE);
-    gfx->setCursor(10, 10);
-    gfx->setTextColor(BLUE);
-    gfx->println("Morse V0.1");
+    header("Morse V0.1", gfx);
 }
 
 char Morse::decode() {

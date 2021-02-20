@@ -1,8 +1,7 @@
 #include "controls.h"
 #include <Arduino_TFT.h>
 
-
-class Grid : public Action {
+class Spear : public Action {
     public:
         void start(Arduino_TFT *gfx) override;
         void loop(Arduino_TFT *gfx) override;

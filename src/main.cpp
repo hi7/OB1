@@ -6,8 +6,8 @@
 #include "ob1.h"
 #include "morse.h"
 #include "squash.h"
-#include "jump.h"
-#include "grid.h"
+#include "spear.h"
+#include "mahjong.h"
 
 bool menu = true;
 bool menuVislible = true;
@@ -79,9 +79,9 @@ void setup(void) {
     uint8_t y = 25;
     buttons.push_back(Button(x, y, min_width, "squash", new Squash(&menu))); y += LINE_HEIGHT;
     buttons.push_back(Button(x, y, min_width, "morse",  new Morse(&menu)));  y += LINE_HEIGHT;
-    buttons.push_back(Button(x, y, min_width, "OB1",    new OB1(BTN))); y += LINE_HEIGHT;
-    buttons.push_back(Button(x, y, min_width, "jump",   new Jump()));   y += LINE_HEIGHT;
-    buttons.push_back(Button(x, y, min_width, "grid",   new Grid()));   y += LINE_HEIGHT;
+    buttons.push_back(Button(x, y, min_width, "OB1",    new OB1(BTN)));      y += LINE_HEIGHT;
+    buttons.push_back(Button(x, y, min_width, "spear",   new Spear()));       y += LINE_HEIGHT;
+    buttons.push_back(Button(x, y, min_width, "mahjong",   new Mahjong()));     y += LINE_HEIGHT;
     activateButton(0);
     drawMenu();
 }
