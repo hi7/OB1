@@ -74,7 +74,7 @@ Squash::Squash(bool *menu) {
     exit = menu;
     player = new Player(120);
     ball = new Ball(304, 130);
-    rounds = 11;
+    rounds = 7;
 }
 
 void Squash::drawRounds(Arduino_TFT *gfx) {
@@ -91,7 +91,7 @@ void Squash::drawField(Arduino_TFT *gfx) {
 }
 
 void Squash::start(Arduino_TFT *gfx) {
-    header("Squash V0.9.1", gfx);
+    header("Squash V1", gfx);
     drawField(gfx);
     drawRounds(gfx);
     player->draw(gfx);
