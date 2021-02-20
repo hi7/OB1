@@ -62,8 +62,8 @@ void Morse::drawChart(Arduino_TFT *gfx) {
     drawCode("X", {true, false, false, true}, 210, 175, gfx);
     drawCode("Y", {true, false, true, true}, 210, 190, gfx);
     drawCode("Z", {true, true, false, false}, 210, 205, gfx);
-    //offset = 10;
-    //drawCode("OUT", {false, true, false, true, false}, 198, 220, gfx);
+    offset = 10;
+    drawCode("OUT", {false, true, false, true, false}, 198, 220, gfx);
     offset = 0;
 }
 
@@ -112,13 +112,13 @@ char Morse::decode() {
 }
 
 const uint16_t LONG = 200;
-const uint16_t BREAK = 700;
-const uint16_t NEW_WORD = 1600;
+const uint16_t BREAK = 900;
+const uint16_t NEW_WORD = 1800;
 uint32_t lastSignal = 0xffffffff;
 void Morse::loop(Arduino_TFT *gfx) {
     if(code.size() > 0 && millis() > (lastSignal + BREAK)) {
         char c = decode();
-        if(c == -2) {
+        if((int8_t) c == -2) {
             logAt("OUT!!!", 140, 10, gfx, false);
             *exit = true;
             //return; // exit method
@@ -133,7 +133,7 @@ void Morse::loop(Arduino_TFT *gfx) {
         offset = 0;
     }
     unsigned long duration = buttonReleased();
-    if(duration > 0) {
+    if(duration > 5) {
         if(text.size() > 0 && millis() > lastSignal + NEW_WORD) {
             text += ' ';
         }
