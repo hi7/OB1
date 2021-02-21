@@ -6,7 +6,7 @@
 #include "ob1.h"
 #include "morse.h"
 #include "squash.h"
-#include "spear.h"
+#include "drive.h"
 #include "mahjong.h"
 
 bool menu = true;
@@ -37,7 +37,7 @@ void drawMenu() {
         gfx->fillScreen(WHITE);
         menuVislible = true;
     }
-    log("OB1 V0.1", gfx);
+    log("OB1 V0.2", gfx);
     for(std::size_t i = 0; i < buttons.size(); ++i) {
       buttons.at(i).draw(gfx);
     }
@@ -77,11 +77,11 @@ void setup(void) {
     const int16_t min_width = 75;
     const uint8_t x = 8;
     uint8_t y = 25;
-    buttons.push_back(Button(x, y, min_width, "Squash", new Squash(&menu))); y += LINE_HEIGHT;
-    buttons.push_back(Button(x, y, min_width, "Morse",  new Morse(&menu)));  y += LINE_HEIGHT;
-    buttons.push_back(Button(x, y, min_width, "OB1",    new OB1(BTN)));      y += LINE_HEIGHT;
-    buttons.push_back(Button(x, y, min_width, "Spear",   new Spear()));       y += LINE_HEIGHT;
-    buttons.push_back(Button(x, y, min_width, "Mahjong",   new Mahjong()));     y += LINE_HEIGHT;
+    buttons.push_back(Button(x, y, min_width, "Drive",   new Drive(&menu)));  y += LINE_HEIGHT;
+    buttons.push_back(Button(x, y, min_width, "Squash",  new Squash(&menu))); y += LINE_HEIGHT;
+    buttons.push_back(Button(x, y, min_width, "Morse",   new Morse(&menu)));  y += LINE_HEIGHT;
+    buttons.push_back(Button(x, y, min_width, "OB1",     new OB1(BTN)));      y += LINE_HEIGHT;
+    buttons.push_back(Button(x, y, min_width, "Mahjong", new Mahjong()));     y += LINE_HEIGHT;
     activateButton(0);
     drawMenu();
 }
